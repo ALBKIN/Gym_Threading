@@ -35,13 +35,15 @@ public class Gym {
         gymMemberRoutines = IntStream.rangeClosed(1, this.totalGymMembers).mapToObj(
                 (id) -> {
                     GymMember gymMember = new GymMember(id);
-                    return new Thread(() -> {
+                    Thread memberThread = new Thread(() -> {
                         try {
                             gymMember.performRoutine();
                         } catch (Exception e) {
                             System.out.println("Error occurred for member with ID " + id + ": " + e);
                         }
                     });
+                    memberThread.setName("JuiceHead " + id);
+                    return memberThread;
                 }).collect(Collectors.toList());
         Thread supervisor = createSupervisor(gymMemberRoutines);
         supervisor.start();
