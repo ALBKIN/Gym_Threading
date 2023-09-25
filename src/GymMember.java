@@ -2,10 +2,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Member {
+public class GymMember {
     private final int id;
 
-    public Member(int id) {
+    public GymMember(int id) {
         this.id = id;
     }
 
