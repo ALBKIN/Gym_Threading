@@ -1,7 +1,9 @@
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream
+import java.util.stream.IntStream;
+
 import static java.lang.Thread.currentThread;
 
 public class Gym {
@@ -13,14 +15,29 @@ public class Gym {
         this.availableMachines = availableMachines;
     }
 
+    public static void main(String[] args) {
+        Gym goldsGym = new Gym(5, new HashMap<>() {
+            {
+                put(MachineType.LEGPRESSMACHINE, 5);
+                put(MachineType.BARBELL, 5);
+                put(MachineType.SQUATMACHINE, 5);
+                put(MachineType.LEGEXTENSIONMACHINE, 5);
+                put(MachineType.LEGCURLMACHINE, 5);
+                put(MachineType.LATPULLDOWNMACHINE, 5);
+                put(MachineType.CABLECROSSOVERMACHINE, 5);
+            }
+        });
+        goldsGym.openForTheDay();
+    }
+
     public void openForTheDay() {
         List<Thread> gymMemberRoutines;
-        gymMemberRoutines = IntStream().rangeClosed(1, this.totalGymMembers).mapToObj(
+        gymMemberRoutines = IntStream.rangeClosed(1, this.totalGymMembers).mapToObj(
                 (id) -> {
                     GymMember gymMember = new GymMember(id);
                     return new Thread(() -> {
                         try {
-                           gymMember.performRoutine();
+                            gymMember.performRoutine();
                         } catch (Exception e) {
                             System.out.println("Error occurred for member with ID " + id + ": " + e);
                         }
@@ -33,7 +50,7 @@ public class Gym {
 
     private Thread createSupervisor(List<Thread> threads) {
         Thread supervisor = new Thread(() -> {
-            while(true) {
+            while (true) {
                 // Lambda technique
                 // List<String> runningThreads = threads.stream().filter((t) -> t.isAlive()).map((t) -> t.getName()).collect(Collectors.toList())
                 List<String> runningThreads = threads.stream().filter(Thread::isAlive).map(Thread::getName).collect(Collectors.toList());
