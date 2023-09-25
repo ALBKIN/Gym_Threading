@@ -5,20 +5,19 @@ import java.util.stream.IntStream;
 public class Member {
     private final int id;
 
-    private Member(int id) {
+    public Member(int id) {
         this.id = id;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
-
     public List<Exercise> generateRoutine() {
         return IntStream.range(0, 6).mapToObj(_i -> new Exercise()).collect(Collectors.toList());
     }
 
     public void performRoutine() throws InterruptedException {
-        List<Exercise> routine - generateRoutine();
+        List<Exercise> routine = generateRoutine();
 
         routine.forEach(exercise -> {
             System.out.println("Gym Member " + this.getId() + " performing exercise: " + exercise);
